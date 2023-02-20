@@ -320,6 +320,11 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
+cookie-handler@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/cookie-handler/-/cookie-handler-1.2.4.tgz#9b4000faaa6e910fa5172cc06bb0fbd0500aed1b"
+  integrity sha512-c4ISgBIE9QTY0zj7GH7yZgoIJmmRbYZb2jIE2ZLUUeE3Trnl3UPQurDux8K+T0qL1FLR0FXlhXcUYat3gcK30w==
+
 cross-spawn@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
