@@ -12,7 +12,7 @@ const setEntrypoint = (Client) => {
 
 // Profile
 const anonimize = (Client, id) => setEntrypoint(Client).delete(`${id}`)
-const get = (Client, profileId) => setEntrypoint(Client).get(`${profileId}`)
+const getProfile = (Client) => setEntrypoint(Client).get()
 
 // Account
 const changePassword = (Client, data) => setEntrypoint(Client).post('changePassword', data)
@@ -25,6 +25,6 @@ export default {
   anonimize,
   changePassword,
   createAddress,
-  get,
+  getProfile,
   updateAddress
 }
