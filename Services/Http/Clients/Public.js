@@ -1,7 +1,9 @@
 import Axios from 'axios'
 import Cookies from 'cookie-handler'
 
-import { Log } from 'Services'
+import { Log } from '../../../Services'
+import ErrorBag from './Responses/ErrorBag'
+import ResponseBag from './Responses/ResponseBag'
 
 /**
  * Client without authentication controll
@@ -26,8 +28,11 @@ PublicClient.interceptors.request.use(
 )
 
 PublicClient.interceptors.response.use(
-  (response) => Promise.resolve(response.data),
-  (error) => Promise.reject(error)
+  (response) => Promise.resolve(ResponseBag(response)),
+  (error) => {
+    Log.error('Failed when load public resources', error)
+    return Promise.reject(error.response ? ErrorBag(error) : error)
+  }
 )
 
 export default PublicClient
