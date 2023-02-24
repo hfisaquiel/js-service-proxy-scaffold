@@ -10,8 +10,8 @@ use one or more service, behind and/or not a secure info endpoint based on authe
 and a external apis like package calculations or even a log repository, the logic can
 be extensive em each entrypoint of the application.
 
-This scaffold brings a idea how to implements a Service Layer that can presents a simplified
-easy-to-use (and reuse) at a centralized place.
+This scaffold brings various concepts for how to implements a Service Layer that can
+presents a simplified easy-to-use (and reuse) at a centralized place.
 
 ```js
 import { Http } from "Services";
@@ -305,3 +305,90 @@ const AwesomeProductPage = (productId, userId) => {
 
 export dafault AwesomeProductPage
 ```
+
+### The responses
+
+Two basic Responses Bag object was createad: `ResponseBag` and `ErrorBag`.
+
+Using a object bag, make the code assertive how handle the responded request, and assure
+the attributes who will return after a request are made.
+
+When a Axios Http Request result in a status diferent from 2XX (default), will Throw
+a Exception and can handled by a `try/catch` or a `then/catch` with a diferent side-effect.
+The responses for both (error/success) are diferent, using the interceptos permit handle
+the reponses, preventing crashes in other than 2XX status condition.
+
+For example to get status on success is:
+
+```json
+ {
+    "status": 200,
+    "data": {
+        "data": [...],
+        "message": "Presents list with success"
+    }
+ }
+```
+
+To get status on error:
+
+```json
+{
+    "response": {
+        "status": 200,
+        "data": {
+            "data": [...],
+            "message": "Presents list with success"
+        }
+    }
+}
+```
+
+In Bag's proposition, the commons statuses and data, as well errors too, will be present
+at first level in returned object. The `error`and`data` attributes, will not be present
+at the same time:
+
+Returned errors result in
+
+```js
+{
+  status: Number, // HTTP Status code (5xx)
+  statusText: String, // The status mesage description (eg. Server error)
+  message: String, // The returned API message
+  errors: Array[String], // The error list from server response (eg. Form inputs validation)
+  success: Boolean // Always false
+}
+```
+
+Success result, generally 2XX response (can changed in Axios instance creation):
+
+```js
+{
+  status: Number, // HTTP Status code (2xx)
+  statusText: String, // The status mesage description (eg. OK)
+  message: String, // The returned API message
+  data: Object|Array|String, // The responded data from server
+  success: Boolean // Generally true
+}
+```
+
+In this way, is don`t necessary to change how the data will be get, simplifying use of
+Http instance:
+
+```js
+Http.profile
+  .updateAddress(1234)
+  .then((result) => {
+    toastify(result.message);
+    modal.close();
+  })
+  .catch((result) => {
+    toastify(result.message);
+  });
+```
+
+## Getting involved
+
+Fell free to question, propose a new aproach, change text or clarify the idea.
+
+Any interaction will make me happy!
