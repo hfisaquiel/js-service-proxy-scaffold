@@ -65,7 +65,37 @@ in a easy way. Just for example implements on Public case
 ┗ yarn.lock
 ```
 
-## The problematic
+## Presenting Service Layer
+
+When navigate on codebase, you will see a Log and Http placed at Service folder. Why?
+
+The central ideia is create a Service layer instead a Helper/Utils approach.
+
+Services is a layer who send/receive info data to external resources and do side-effects
+who will not be the main rules of a application/screen (business rules). Is just a provider
+that can be replaced for other, with less or no one core business change.
+
+In practice, if a parameter change, but not the behavior, the Service layer can change
+the data without change the behavior of the page, and keep all the places that use the
+same provider info updated.
+
+Adding this turn possible monitoring the transacted information or do a side-effect,
+as notify another provider, log info or split/join info to more then one API, for example
+make a "login" in a service API before get/send some payload.
+
+It's different from the [`Helpers`](Helpers/) folder layer. The Helpers has not a side-effect
+just process the info who is passed as parameter, or get a static data-object, or on max
+prepare a Object on easy mode. All the transacion will be handled by user (even other code)
+commands.
+
+Other present layer, is [`Data`](Data/). This layer has a behaviour as a Repository.
+The main application can't know how data are persisted, just use and place at the screen
+or ask the user some new data. The repository `Data` has a [example](Data/user.js) for
+User data, who persist in browser `Storage` and can be accessible even the page reloads.
+The pages don`t need acess the `Storage`, transform the data for after use and persist
+changes, the Repository layer turns possible reuse in various pages or areas places.
+
+## The problematic of Requests
 
 Using Axios on each necessary request page, in a verbose form would like:
 
@@ -386,6 +416,20 @@ Http.profile
     toastify(result.message);
   });
 ```
+
+### Plus: Logs Service
+
+One of the most important part of any application is observe the self behavior.
+
+As said in [Presenting Service Layer], a log as a Layer, instead a Help, make a possibility
+to send a info to another service, like a service layer or even a remote log repository.
+Turn possible insert global info about server/client machine info, or get a condition,
+without pass in each log request.
+
+Make possible turn in or off the log register, or monitoring just some info level.
+
+In same way, other services can be created to handle data, connect to others providers,
+make plugins instance, reusable.
 
 ## Getting involved
 
