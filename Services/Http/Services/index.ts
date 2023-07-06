@@ -5,7 +5,9 @@ import Shipping from './shipping'
 
 import { ExternalClient, PrivateClient, PublicClient } from '../Clients'
 
-export const ServicesList = {
+import { ServiceEndpoints, Services as ServicesType , ServicesListType} from './types'
+
+export const ServicesList: ServicesListType = {
   auth: {
     client: PublicClient,
     service: Auth
@@ -36,12 +38,21 @@ const servicesHandler = {
   }
 }
 
+declare global  {
+  interface ProxyConstructor {
+      new <TSource extends object, TTarget extends ServiceEndpoints>(
+          target: TSource,
+          handler: ProxyHandler<TSource>
+        ): TTarget;
+  }
+}
+
+
 /**
  *
  * @param {String} name service item name
- * @returns {Proxy}
  */
-export const Services = (name) => new Proxy(
+export const Services = (name: ServicesType): ServiceEndpoints => new Proxy<ServicesListType[ServicesType], ServiceEndpoints>(
   ServicesList[name],
   servicesHandler
 )

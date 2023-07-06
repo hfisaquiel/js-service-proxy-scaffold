@@ -1,8 +1,9 @@
+import { ErrorBag as ErrorBagType } from "../../Services/types"
+
 /**
  * Return a identified payload
- * @param {AxiosError} error the axios error object payload
  */
-const ErrorBag = ({ response }) => ({
+const ErrorBag = ({ response }): ErrorBagType => ({
   status: response.status,
   statusText: response.statusText,
   message: response.data.message || '',
